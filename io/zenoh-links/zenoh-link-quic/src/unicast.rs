@@ -280,6 +280,7 @@ impl LinkManagerUnicastTrait for LinkManagerUnicastQuic {
         // Install rustls provider
         rustls::crypto::ring::default_provider()
             .install_default()
+            .map_err(|_| tracing::warn!("TLS crypto provider is installed"))
             .ok();
 
         let quic_config: QuicServerConfig = server_crypto

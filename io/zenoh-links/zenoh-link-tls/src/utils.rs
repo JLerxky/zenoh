@@ -193,6 +193,7 @@ impl TlsServerConfig {
         // Install rustls provider
         rustls::crypto::ring::default_provider()
             .install_default()
+            .map_err(|_| tracing::warn!("TLS crypto provider is installed"))
             .ok();
 
         let sc = if tls_server_client_auth {
@@ -279,6 +280,7 @@ impl TlsClientConfig {
         // Install rustls provider
         rustls::crypto::ring::default_provider()
             .install_default()
+            .map_err(|_| tracing::warn!("TLS crypto provider is installed"))
             .ok();
 
         let cc = if tls_client_server_auth {
